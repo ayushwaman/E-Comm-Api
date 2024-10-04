@@ -1,0 +1,6 @@
+1. place the order
+
+get cart item of user,calculate the total amount
+create record for order
+reduce the stock
+clear the cart
