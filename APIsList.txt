@@ -1,0 +1,46 @@
+ProductsController
+Get Products - Done
+Add Products- Done
+Get one Product- Done
+Rate Product
+Filter Product- Done
+Add item to cart
+get item of cart
+remove item from cart
+
+USercontroller
+signUp = Email, name, password, typeofUser(custom, user) -Done
+signIn = Email, password - Done
+
+
+Steps to make the ID in mongodb sequential
+1.counter collection = (_id :"cartitemID", value:0 )
+2.while adding cartitem, the counter should be incremented and use counter value as id for cartitem document
+
+
+db.products.aggregate([
+    {
+        $unwind:"$ratings"
+    },
+    {
+        $group:{
+            _id:"$name",
+            averageRating:{$avg:"$ratings.rating"}
+        }
+    }
+])
+
+db.products.aggregate([
+    {
+    $project:{name:1, countOfRating:{
+        $cond:{if:{$isArray:"$ratings"},
+        then:{$size:"$ratings"},else:0}
+        }}
+    },
+    {
+        $sort:{countOfRating:-1}
+    },
+    {
+        $limit:1
+    }
+])
